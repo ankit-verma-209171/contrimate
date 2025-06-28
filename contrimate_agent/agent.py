@@ -1,57 +1,30 @@
 from google.adk.agents import Agent
-from pydantic import BaseModel
 
-
-class Person(BaseModel):
-    name: str
-    age: int
-
-    def greet(self):
-        return f"Hello, my name is {self.name} and I am {self.age} years old."
-
-
-def get_persons() -> dict[str, list[str]]:
-    """
-    Retrieve a list of persons as JSON-serializable dictionaries.
-
-    Returns:
-        dict: A dictionary with a single key "people", whose value is a list of JSON strings,
-            each representing a Person object.
-    Example:
-        {
-            "people": [
-                '{"name": "Alice", "age": 30}',
-                '{"name": "Bob", "age": 25}'
-        }
-    """
-    people = [
-        Person(name="Alice", age=30),
-        Person(name="Bob", age=25),
-        Person(name="Charlie", age=35),
-    ]
-    return {"people": [person.model_dump_json() for person in people]}
-
-
-def get_count(string: str) -> dict[str, int]:
-    """
-    Count the number of characters in a given string.
-    Args:
-        string (str): The input string to count characters in.
-    Returns:
-        dict: A dictionary with a single key "count", whose value is the number of characters
-            in the input string.
-    Example:
-        {
-            "count": 13
-        }
-    """
-    return {"count": len(string)}
-
+from libraries.tools import get_issue_comments, get_open_issues, get_issue_detail
 
 root_agent = Agent(
-    name="person_agent",
-    model="gemini-2.0-flash",
-    description="An agent that can interact with and provide information about people.",
-    instruction="Use this agent to get information about different persons.",
-    tools=[get_persons, get_count],
+    name="contrimate_agent",
+    model="gemini-2.5-flash",
+    description=(
+        "A genuine and proactive assistant to help you discover and understand open issues in GitHub repositories. "
+        "I will ask about the topics, technologies, or areas you're interested in, and clarify any confusion or queries you may have. "
+        "I can collect and summarize relevant issues, deep dive into comments for more context, and provide well-formatted, actionable suggestions. "
+        "Whenever possible, I will include direct links to issues and comments so you can easily navigate to them. "
+        "I'll guide you with follow-up questions and help you navigate your open source journey."
+    ),
+    instruction=(
+        "You are a thoughtful and engaging assistant for exploring open issues and discussions in GitHub repositories.\n"
+        "Always start by asking the user about the topics, technologies, or problem areas they want to explore.\n"
+        "If the user seems unsure, offer suggestions or ask clarifying questions to help them narrow down their interests.\n"
+        "Use the available tools to gather relevant issues and, if needed, analyze comments for deeper insights.\n"
+        "Whenever you present an issue or comment, include a direct link to it so the user can easily access it.\n"
+        "Format your responses clearly, summarizing key points and providing actionable suggestions.\n"
+        "Encourage the user by asking follow-up questions, offering next steps, and guiding them to suitable issues or discussions.\n"
+        "Be proactive in resolving confusion and always aim to make the user's experience smooth and informative.\n"
+        "Available tools:\n"
+        "- get_open_issues: Retrieve open issues in a GitHub repository.\n"
+        "- get_issue_comments: Retrieve comments on a specific issue in a GitHub repository.\n"
+        "- get_issue_detail: Retrieve details of a specific issue in a GitHub repository."
+    ),
+    tools=[get_open_issues, get_issue_comments, get_issue_detail],
 )
