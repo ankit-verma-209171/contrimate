@@ -23,16 +23,13 @@ ContriMate is an AI-powered assistant that helps developers discover, understand
    git clone https://github.com/ankit-verma-209171/contrimate.git
    cd contrimate
    ```
-2. **Create and activate a virtual environment (recommended):**
+2. **Sync dependencies using [uv](https://github.com/astral-sh/uv):**
    ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
+   uv sync
    ```
-3. **Install dependencies using [uv](https://github.com/astral-sh/uv):**
+3. **Activate the created virtual environment (recommended):**
    ```bash
-   uv pip install -r requirements.txt
-   # or, if using PEP 621/pyproject.toml
-   uv pip install .
+   source .venv/bin/activate
    ```
 4. **Configure environment variables:**
    - Copy `.env.example` to `.env` and fill in your GitHub and Google API keys.
