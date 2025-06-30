@@ -2,6 +2,10 @@
 
 ContriMate is an AI-powered assistant that helps developers discover, understand, and navigate open GitHub issues tailored to their tech stack, interests, and focus areas. It proactively guides users to suitable issues, summarizes discussions, and provides actionable suggestions with direct links for easy access.
 
+## Demo
+
+[![Watch the video in YouTube](https://img.youtube.com/vi/ur2Fk-IlIpk/0.jpg)](https://www.youtube.com/watch?v=ur2Fk-IlIpk)
+
 ## Features
 
 - **Personalized Issue Discovery:** Find open issues in any GitHub repository based on your interests and technologies.
